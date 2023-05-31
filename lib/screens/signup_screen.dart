@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:insta_clone/screens/signup_screen.dart';
-import 'package:insta_clone/utils/colors.dart';
-import 'package:insta_clone/widgets/button.dart';
-import 'package:insta_clone/widgets/text_field_input.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:insta_clone/screens/login_screen.dart';
 import 'package:insta_clone/widgets/widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../utils/colors.dart';
+import '../widgets/button.dart';
+import '../widgets/text_field_input.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _userNameController = TextEditingController();
+  final _bioController = TextEditingController();
   @override
   void dispose() {
+    _bioController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _userNameController.dispose();
     super.dispose();
   }
 
@@ -49,6 +54,35 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 64,
               ),
+              // circular wigdet to accept and show our selected file
+              Stack(
+                children: [
+                  const CircleAvatar(
+                    radius: 64,
+                    backgroundImage: NetworkImage(
+                        'https://wallpaperaccess.com/full/1111744.jpg'),
+                  ),
+                  Positioned(
+                      bottom: -10,
+                      left: 80,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_a_photo),
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              //userName
+              TextFieldInput(
+                textEditingController: _userNameController,
+                hintText: "Enter your name",
+                textInputType: TextInputType.text,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
               //email
               TextFieldInput(
                 textEditingController: _emailController,
@@ -68,8 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 24,
               ),
+              //bio
+              TextFieldInput(
+                textEditingController: _bioController,
+                hintText: "Enter your bio",
+                textInputType: TextInputType.text,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
               //login button
-              Button(child: "Log in", ontap: () {}),
+              Button(child: "Sign up", ontap: () {}),
               Flexible(
                 child: Container(),
                 flex: 2,
@@ -83,19 +126,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       vertical: 8,
                     ),
                     child: const Text(
-                      "Don't have an account?",
+                      "Already have an account?",
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      nextScreen(context, const SignUpScreen());
+                      nextScreen(
+                        context,
+                        const LoginScreen(),
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,
                       ),
                       child: const Text(
-                        "Sign up",
+                        "Login",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
