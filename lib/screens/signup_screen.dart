@@ -1,6 +1,12 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:insta_clone/resources/auth_method.dart';
 import 'package:insta_clone/screens/login_screen.dart';
+import 'package:insta_clone/utils/utils.dart';
 import 'package:insta_clone/widgets/widget.dart';
 
 import '../utils/colors.dart';
@@ -19,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
   final _userNameController = TextEditingController();
   final _bioController = TextEditingController();
+  Uint8List? _image;
   @override
   void dispose() {
     _bioController.dispose();
@@ -26,6 +33,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _passwordController.dispose();
     _userNameController.dispose();
     super.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -57,16 +71,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               // circular wigdet to accept and show our selected file
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 64,
-                    backgroundImage: NetworkImage(
-                        'https://wallpaperaccess.com/full/1111744.jpg'),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64, backgroundImage: MemoryImage(_image!))
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
+                        ),
                   Positioned(
                       bottom: -10,
                       left: 80,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: selectImage,
                         icon: const Icon(Icons.add_a_photo),
                       ))
                 ],
@@ -111,8 +128,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 24,
               ),
-              //login button
-              Button(child: "Sign up", ontap: () {}),
+              //sign in button
+              Button(
+                  child: "Sign up",
+                  ontap: () async {
+                    String res = await AuthMethod().signUpUser(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        userName: _userNameController.text,
+                        bio: _bioController.text,
+                        file: _image!);
+                  }),
               Flexible(
                 child: Container(),
                 flex: 2,
