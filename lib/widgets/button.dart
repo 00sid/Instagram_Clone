@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/utils/colors.dart';
 
 class Button extends StatelessWidget {
-  const Button({super.key, required this.child, required this.ontap});
+  Button(
+      {super.key,
+      required this.child,
+      required this.ontap,
+      this.loading = false});
   final ontap;
   final String child;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,13 @@ class Button extends StatelessWidget {
           ),
           color: blueColor,
         ),
-        child: Text(child),
+        child: loading
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              )
+            : Text(child),
       ),
     );
   }

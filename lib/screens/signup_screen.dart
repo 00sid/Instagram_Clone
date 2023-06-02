@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -9,6 +8,9 @@ import 'package:insta_clone/screens/login_screen.dart';
 import 'package:insta_clone/utils/utils.dart';
 import 'package:insta_clone/widgets/widget.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
 import '../widgets/button.dart';
 import '../widgets/text_field_input.dart';
@@ -26,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _userNameController = TextEditingController();
   final _bioController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
   @override
   void dispose() {
     _bioController.dispose();
@@ -130,14 +133,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               //sign in button
               Button(
+                  loading: _isLoading,
                   child: "Sign up",
-                  ontap: () async {
-                    String res = await AuthMethod().signUpUser(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        userName: _userNameController.text,
-                        bio: _bioController.text,
-                        file: _image!);
+                  ontap: () {
+                    signUpUser();
                   }),
               Flexible(
                 child: Container(),
@@ -181,5 +180,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethod().signUpUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        userName: _userNameController.text,
+        bio: _bioController.text,
+        file: _image!);
+    setState(() {
+      _isLoading = false;
+    });
+    if (res != 'success') {
+      showSnackBar(res, context);
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    }
   }
 }
