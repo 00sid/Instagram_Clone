@@ -8,7 +8,9 @@ import 'package:insta_clone/widgets/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final postId;
+  // ignore: prefer_typing_uninitialized_variables
   final snap;
   const CommentsScreen({super.key, required this.postId, required this.snap});
 
@@ -30,7 +32,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Comments',
         ),
         backgroundColor: mobileBackgroundColor,
@@ -77,8 +79,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   child: TextField(
                     controller: _commentController,
                     decoration: InputDecoration(
-                      hintText: "Comment as " + user.username,
                       border: InputBorder.none,
+                      hintText: "Comment as ${user.username}",
                     ),
                   ),
                 ),
@@ -101,7 +103,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     vertical: 8,
                     horizontal: 8,
                   ),
-                  child: Text(
+                  child: const Text(
                     "Post",
                     style: TextStyle(
                       color: Colors.blueAccent,

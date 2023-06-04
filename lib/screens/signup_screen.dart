@@ -58,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
+                // ignore: sort_child_properties_last
                 child: Container(),
                 flex: 2,
               ),
@@ -139,6 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     signUpUser();
                   }),
               Flexible(
+                // ignore: sort_child_properties_last
                 child: Container(),
                 flex: 2,
               ),
@@ -196,11 +198,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _isLoading = false;
     });
     if (res != 'success') {
+      // ignore: use_build_context_synchronously
       showSnackBar(res, context);
       setState(() {
         _isLoading = false;
       });
     } else {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(

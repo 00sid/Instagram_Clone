@@ -51,6 +51,7 @@ class FirestoreMethod {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
     }
   }
@@ -74,9 +75,11 @@ class FirestoreMethod {
           'datePublished': DateTime.now(),
         });
       } else {
+        // ignore: avoid_print
         print('Text is empty');
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
     }
   }
@@ -86,6 +89,7 @@ class FirestoreMethod {
     try {
       await _firestore.collection('posts').doc(postId).delete();
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
     }
   }

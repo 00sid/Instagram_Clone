@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
+                // ignore: sort_child_properties_last
                 child: Container(),
                 flex: 2,
               ),
@@ -83,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     loginUser();
                   }),
               Flexible(
+                // ignore: sort_child_properties_last
                 child: Container(),
                 flex: 2,
               ),
@@ -132,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
       password: _passwordController.text,
     );
     if (res == "success") {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(
@@ -141,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
+      // ignore: use_build_context_synchronously
       showSnackBar(res, context);
     }
     setState(() {

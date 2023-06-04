@@ -13,6 +13,7 @@ class StorageMethods {
       String childName, Uint8List file, bool isPost) async {
     //creating location to our firebase storage
     Reference ref =
+        // ignore: await_only_futures
         await _storage.ref().child(childName).child(_auth.currentUser!.uid);
     if (isPost) {
       String id = const Uuid().v1();

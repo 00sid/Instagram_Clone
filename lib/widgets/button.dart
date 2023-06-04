@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/utils/colors.dart';
 
+// ignore: must_be_immutable
 class Button extends StatelessWidget {
   Button(
       {super.key,
       required this.child,
       required this.ontap,
       this.loading = false});
+  // ignore: prefer_typing_uninitialized_variables
   final ontap;
   final String child;
   bool loading = false;
@@ -28,7 +30,7 @@ class Button extends StatelessWidget {
           color: blueColor,
         ),
         child: loading
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   color: Colors.white,
                 ),

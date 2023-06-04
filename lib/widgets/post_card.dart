@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final snap;
   const PostCard({super.key, required this.snap});
 
@@ -70,7 +71,9 @@ class _PostCardState extends State<PostCard> {
                       children: [
                         Text(
                           widget.snap['username'],
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         )
                       ],
                     ),
@@ -91,6 +94,7 @@ class _PostCardState extends State<PostCard> {
                                       onTap: () async {
                                         await FirestoreMethod()
                                             .deletePost(widget.snap['postId']);
+                                        // ignore: use_build_context_synchronously
                                         Navigator.of(context).pop();
                                       },
                                       child: Container(
@@ -247,7 +251,7 @@ class _PostCardState extends State<PostCard> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     'View all $commentLen comments',
-                    style: TextStyle(color: secondaryColor, fontSize: 16),
+                    style: const TextStyle(color: secondaryColor, fontSize: 16),
                   ),
                 ),
                 Container(

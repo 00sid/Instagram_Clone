@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -84,6 +83,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         setState(() {
           _isloading = false;
         });
+        // ignore: use_build_context_synchronously
         showSnackBar("Posted!", context);
         clearImage();
       } else {
@@ -114,7 +114,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     return _file == null
         ? Center(
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.upload,
                 size: 50,
               ),
@@ -125,7 +125,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                 ),
                 onPressed: () {
@@ -134,7 +134,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   });
                 },
               ),
-              title: Text("Post to"),
+              title: const Text("Post to"),
               actions: [
                 TextButton(
                     onPressed: () => postImage(
@@ -142,7 +142,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           user.username,
                           user.photoUrl,
                         ),
-                    child: Text(
+                    child: const Text(
                       "Post",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             body: Column(
               children: [
                 _isloading
-                    ? LinearProgressIndicator()
+                    ? const LinearProgressIndicator()
                     : const Padding(
                         padding: EdgeInsets.only(top: 0),
                       ),

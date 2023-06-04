@@ -5,9 +5,11 @@ class Post {
   final String uid;
   final String username;
   final String postId;
+  // ignore: prefer_typing_uninitialized_variables
   final datePublished;
   final String profImage;
   final String postUrl;
+  // ignore: prefer_typing_uninitialized_variables
   final likes;
 
   Post({
