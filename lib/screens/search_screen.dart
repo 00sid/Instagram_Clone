@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 //import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:insta_clone/screens/profile_screen.dart';
 import 'package:insta_clone/utils/colors.dart';
@@ -40,12 +41,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       isGreaterThanOrEqualTo: searchController.text)
                   .get(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                return ListView.builder(
+
+                if (snapshot.hasData) {
+                  return ListView.builder(
                     itemCount: (snapshot.data! as dynamic).docs.length,
                     itemBuilder: (context, index) {
                       return InkWell(
@@ -75,27 +78,36 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                       );
-                    });
+                    },
+                  );
+                }
+
+                return const SizedBox();
+              })
+          : FutureBuilder(
+              future: FirebaseFirestore.instance.collection('posts').get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (snapshot.hasData) {
+                  return MasonryGridView.count(
+                    crossAxisCount: 3,
+                    itemCount: (snapshot.data! as dynamic).docs.length,
+                    itemBuilder: (context, index) {
+                      return Image.network(
+                        (snapshot.data! as dynamic).docs[index]['postUrl'],
+                      );
+                    },
+                  );
+                }
+
+                return const SizedBox();
               },
-            )
-          // : FutureBuilder(
-          //     future: FirebaseFirestore.instance.collection('posts').get(),
-          //     builder: (context, snapshot) {
-          //       if (!snapshot.hasData) {
-          //         return Center(
-          //           child: CircularProgressIndicator(),
-          //         );
-          //       }
-          //       return MasonryGridView.count(
-          //           crossAxisCount: 3,
-          //           itemCount: (snapshot.data! as dynamic).docs.length,
-          //           itemBuilder: (context, index) {
-          //             return Image.network(
-          //               (snapshot.data! as dynamic).docs[index]['postUrl'],
-          //             );
-          //           });
-          //     }),
-          : const Text('posts'),
+            ),
     );
   }
 }
