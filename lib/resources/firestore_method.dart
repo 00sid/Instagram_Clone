@@ -121,4 +121,27 @@ class FirestoreMethod {
       print(e.toString());
     }
   }
+
+  //creating chat method
+
+  //creating ref
+  Future<void> createChat(String userId, String friendId, String userName,
+      String friendName) async {
+    final CollectionReference chatCollection =
+        FirebaseFirestore.instance.collection("chats");
+    DocumentReference chatDocumentReference = await chatCollection.add({
+      "userId": userId,
+      "userName": userName,
+      "friendId": friendId,
+      "friendName": friendName,
+      "chatId": " ",
+      "recentMessage": "",
+      "recentMessageSender": "",
+    });
+
+    //update the members
+    await chatDocumentReference.update({
+      "chatId": chatDocumentReference.id,
+    });
+  }
 }
