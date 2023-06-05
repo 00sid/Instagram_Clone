@@ -210,14 +210,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
     } else {
       // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
+      Navigator.of(context)
+        ..pop()
+        ..pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
           ),
-        ),
-      );
+        );
     }
   }
 }

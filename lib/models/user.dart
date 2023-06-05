@@ -28,8 +28,10 @@ class User {
         'followers': followers,
         'following': following,
       };
-  static User fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  static User? fromSnap(DocumentSnapshot<Map<String, dynamic>> snap) {
+    var snapshot = snap.data();
+    if (snapshot == null) return null;
+
     return User(
       email: snapshot['email'],
       uid: snapshot['uid'],

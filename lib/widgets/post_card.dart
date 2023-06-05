@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:insta_clone/models/user.dart';
 import 'package:insta_clone/providers/user_provider.dart';
 import 'package:insta_clone/resources/firestore_method.dart';
 import 'package:insta_clone/screens/comment_screen.dart';
@@ -45,7 +44,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final user = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mobileBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -119,7 +118,7 @@ class _PostCardState extends State<PostCard> {
             onDoubleTap: () async {
               await FirestoreMethod().likePost(
                 widget.snap['postId'],
-                user.uid,
+                user!.uid,
                 widget.snap['likes'],
               );
               setState(() {
@@ -162,7 +161,7 @@ class _PostCardState extends State<PostCard> {
           Row(
             children: [
               LikeAnimation(
-                isAnimating: widget.snap['likes'].contains(user.uid),
+                isAnimating: widget.snap['likes'].contains(user!.uid),
                 smallLike: true,
                 child: IconButton(
                   onPressed: () async {

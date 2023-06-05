@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/providers/user_provider.dart';
 import 'package:insta_clone/utils/colors.dart';
 import 'package:insta_clone/utils/global_variable.dart';
+import 'package:provider/provider.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
@@ -37,13 +39,19 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserProvider>().getUser;
+
     return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: homeScreenItems,
-      ),
+      body: user == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: pageController,
+              onPageChanged: onPageChanged,
+              children: homeScreenItems,
+            ),
       bottomNavigationBar: CupertinoTabBar(
         backgroundColor: mobileBackgroundColor,
         items: [

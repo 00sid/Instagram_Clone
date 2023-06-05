@@ -9,9 +9,9 @@ class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   //sign up users
-  Future<model.User> getUserDetails() async {
+  Future<model.User?> getUserDetails() async {
     User currentUser = _auth.currentUser!;
-    DocumentSnapshot snap =
+    DocumentSnapshot<Map<String, dynamic>> snap =
         await _firestore.collection('users').doc(currentUser.uid).get();
     return model.User.fromSnap(snap);
   }
@@ -50,7 +50,7 @@ class AuthMethod {
         await _firestore.collection('users').doc(cred.user!.uid).set(
               user.toJason(),
             );
-        res = "Success";
+        res = "success";
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {

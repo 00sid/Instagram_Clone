@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:insta_clone/models/user.dart';
 import 'package:insta_clone/providers/user_provider.dart';
 import 'package:insta_clone/resources/firestore_method.dart';
 import 'package:insta_clone/utils/colors.dart';
@@ -110,7 +109,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final user = Provider.of<UserProvider>(context).getUser;
     return _file == null
         ? Center(
             child: IconButton(
@@ -138,7 +137,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               actions: [
                 TextButton(
                     onPressed: () => postImage(
-                          user.uid,
+                          user!.uid,
                           user.username,
                           user.photoUrl,
                         ),
@@ -165,7 +164,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                        user.photoUrl,
+                        user!.photoUrl,
                       ),
                     ),
                     SizedBox(

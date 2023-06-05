@@ -33,12 +33,17 @@ class FeedScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) => PostCard(
-              snap: snapshot.data!.docs[index].data(),
-            ),
-          );
+
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) => PostCard(
+                snap: snapshot.data!.docs[index].data(),
+              ),
+            );
+          }
+
+          return const SizedBox();
         },
       ),
     );

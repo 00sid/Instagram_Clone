@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:insta_clone/models/user.dart';
 import 'package:insta_clone/providers/user_provider.dart';
 import 'package:insta_clone/resources/firestore_method.dart';
 import 'package:insta_clone/utils/colors.dart';
@@ -28,7 +27,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -70,7 +69,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
             children: [
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                  user.photoUrl,
+                  user!.photoUrl,
                 ),
               ),
               Expanded(
